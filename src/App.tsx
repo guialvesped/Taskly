@@ -52,7 +52,7 @@ function App() {
   });
     
     
-  const getData = async () => { //Pega Target
+  const getTarget = async () => { //Pega Target
     
     try {
     
@@ -68,11 +68,11 @@ function App() {
     
   };
     
-  const postData = async () => {
+  const postTarget = async () => {
     
     try {
     
-    const response = await requestBase.post('targets', {
+    const response = await requestBase.post('Targets', {
     
     title: 'Demo da aula',
     
@@ -93,7 +93,21 @@ function App() {
     };
     
   };
-  
+
+  const getTargetById = async () => {
+    try {
+      // Faz uma requisição GET para buscar o Target específico pelo ID
+      const response = await requestBase.get(`Targets/${targetId}`);
+      
+      // Armazena o Target recebido no estado
+      setTargets(response.data);
+      
+      console.log(response.data); // Mostra o Target no console para verificação
+    } catch (error) {
+      console.error('Erro ao buscar Target com ID específico:', error);
+    }
+  };
+ 
   const postTodo = async () => {
   
     try {
@@ -150,11 +164,11 @@ function App() {
   };
     
     
-  const DeleteData = async () => {
+  const DeleteToDo = async () => {
     
     try {
     
-    const response = await requestBase.delete(`todo/${todoId}`);
+    const response = await requestBase.delete(`Todo/${todoId}`);
     
     setTodo(response.data); // Armazena os dados recebidos no estado
     
