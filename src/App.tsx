@@ -56,13 +56,14 @@ function App() {
     
     try {
     
-    const response = await requestBase.get('Targets');//Busca na api por 'Targets', inserindo o que esta dentro do get() na URL
+      const response = await requestBase.get('Targets');//Busca na api por 'Targets', inserindo o que esta dentro do get() na URL
     
-    setTargets(response.data); // Armazena os dados recebidos no estado
+      setTargets(response.data); // Armazena os dados recebidos no estado
+      console.log(response.data)
     
     } catch (error) {
     
-    console.error('Erro na requisição:', error);
+      console.error('Erro na requisição:', error);
     
     }
     
@@ -72,23 +73,23 @@ function App() {
     
     try {
     
-    const response = await requestBase.post('Targets', {
+      const response = await requestBase.post('Targets', {
+      
+        title: 'Demo da aula',
+        
+        description: 'Mostando como fazer um post com axios',
+        
+        isComplete: false,
+        
+        todo:[]
+      
+      });
     
-    title: 'Demo da aula',
-    
-    description: 'Mostando como fazer um post com axios',
-    
-    isComplete: false,
-    
-    todo:[]
-    
-    });
-    
-    console.log(response.data);
+      console.log(response.data);
     
     } catch (error) {
     
-    console.error('Erro na requisição:', error)
+      console.error('Erro na requisição:', error)
     
     };
     
@@ -102,38 +103,94 @@ function App() {
       // Armazena o Target recebido no estado
       setTargets(response.data);
       
-      console.log(response.data); // Mostra o Target no console para verificação
+      console.log(target); // Mostra o Target no console para verificação
     } catch (error) {
       console.error('Erro ao buscar Target com ID específico:', error);
     }
   };
- 
+
+  
+  const putTarget = async() => {
+    try {
+      const response = await requestBase.put(`Targets/${targetId}`,{
+    
+        title: 'Demo da aula',
+        
+        description: 'Mostando como fazer um post com axios',
+        
+        isComplete: false,
+        
+        todo:[]
+        
+      })
+
+    }catch(error){
+      console.error('Erro na requisição:', error)
+    }
+  }
+
+  const DeleteTarget = async () => {
+    
+    try {
+    
+      const response = await requestBase.delete(`Targets/${todoId}`);
+    
+      setTodo(response.data); // Armazena os dados recebidos no estado
+    
+    } catch (error) {
+      console.error('Erro na requisição:', error);
+    }
+    
+  };
+
+  const getToDo = async () => {
+    try {
+      const response = await requestBase.get('Todo')
+      setTodo(response.data)
+      console.log(todo)
+    } catch (error) {
+      console.error('Erro na requisição:', error);
+    }
+  }
+
   const postTodo = async () => {
   
     try {
     
     const response = await requestBase.post('Todo', {
     
-    title: 'Primeiro',
+      title: 'Primeiro',
+      
+      description: 'Montar a estrutura do request - URL e Headers',
+      
+      isComplete: false,
+      
+      targetId: 22
+      
+      });
     
-    description: 'Montar a estrutura do request - URL e Headers',
-    
-    isComplete: false,
-    
-    targetId: 22
-    
-    });
-    
-    console.log(response.data);
+      console.log(response.data);
     
     } catch (error) {
     
-    console.error('Erro na requisição:', error)
+      console.error('Erro na requisição:', error)
     
     };
     
   };
     
+  const getToDoById = async () => {
+    try {
+      // Faz uma requisição GET para buscar o Target específico pelo ID
+      const response = await requestBase.get(`Targets/${targetId}`);
+      // Armazena o Target recebido no estado
+      setTargets(response.data);
+      
+      console.log(target); // Mostra o Target no console para verificação
+    } catch (error) {
+      console.error('Erro ao buscar Target com ID específico:', error);
+    }
+  }
   
   const putTodo = async () => {
     
