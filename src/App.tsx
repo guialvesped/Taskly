@@ -3,6 +3,8 @@ import './App.css'
 import axios from 'axios';
 import { TargetProps } from './interfaces/TargetProps';
 import { TodoProps } from './interfaces/ToDoProps';
+import Target from './components/TargetBox';
+import React from 'react';
 
 function App() {
  
@@ -12,7 +14,7 @@ function App() {
     
   const [targets, setTargets] = useState<TargetProps[]>([]);
     
-  const [todo, setTodo] = useState<TodoProps | null>();
+  const [todo, setTodo] = useState<TodoProps>();
     
   const [todoId, setTodoId] = useState<number>(0);
     
@@ -223,6 +225,25 @@ function App() {
 
   return (
     <>
+      <h1>Lista de Targets</h1>
+      <div className='main'>
+        {targets.length > 0 ? (
+          targets.map((target) => (
+            <React.Fragment key={target.id}>
+              <Target
+                title={target.title}
+                id={target.id}
+                description={target.description}
+                isComplete={target.isComplete}
+                toDoList={target.toDoList}
+              />
+            </React.Fragment>
+          ))
+        ) : (
+          <h3>Lista de Targets Vazia...</h3>
+        )} 
+      </div>
+           
     </>
   )
 }
