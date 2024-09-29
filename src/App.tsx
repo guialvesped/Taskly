@@ -240,7 +240,7 @@ function App() {
             </React.Fragment>
           ))
         ) : (
-          <h3>Lista de Targets Vazia...</h3>
+          <h4>Lista de Targets Vazia...</h4>
         )} 
       </div>
            

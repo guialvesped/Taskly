@@ -1,3 +1,23 @@
 .targetBox {
     background-color: #242443;
+    min-width: 400px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.targetBox button {
+    background-color: #242443;
+    border-radius: 6px;
+    border: 1px solid #7A12FF;
+    display: flex;
+    align-items: center;
+}
+
+.toDoOff{
+    display: none;
+}
+.toDoOn{
+    display: block;
 }
