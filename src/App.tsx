@@ -1,38 +1,18 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import axios from 'axios';
+import { TargetProps } from './interfaces/TargetProps';
+import { TodoProps } from './interfaces/ToDoProps';
 
 function App() {
-  interface Todo {
-
-    id: number;
+ 
     
-    title: string;
-    
-    description: string;
-    
-    isComplete: boolean;
-    
-    targetId: number;
-    
-  }
-    
-  interface Target {
-    
-    id: number;
-    
-    title: string;
-    
-    description: string;
-    
-    isComplete: boolean;
-    
-  } 
+  
   const baseUrl = 'https://todo-caio.azurewebsites.net/api/';
     
-  const [target, setTargets] = useState<Target>();
+  const [targets, setTargets] = useState<TargetProps[]>([]);
     
-  const [todo, setTodo] = useState<Todo>();
+  const [todo, setTodo] = useState<TodoProps | null>();
     
   const [todoId, setTodoId] = useState<number>(0);
     
@@ -103,7 +83,7 @@ function App() {
       // Armazena o Target recebido no estado
       setTargets(response.data);
       
-      console.log(target); // Mostra o Target no console para verificação
+      console.log(targets); // Mostra o Target no console para verificação
     } catch (error) {
       console.error('Erro ao buscar Target com ID específico:', error);
     }
@@ -186,7 +166,7 @@ function App() {
       // Armazena o Target recebido no estado
       setTargets(response.data);
       
-      console.log(target); // Mostra o Target no console para verificação
+      console.log(targets); // Mostra o Target no console para verificação
     } catch (error) {
       console.error('Erro ao buscar Target com ID específico:', error);
     }
@@ -237,9 +217,12 @@ function App() {
     
   };
 
+  useEffect(() => {
+    getTarget();
+  }, []);
+
   return (
     <>
-      
     </>
   )
 }
