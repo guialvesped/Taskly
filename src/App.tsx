@@ -5,6 +5,7 @@ import { TargetProps } from './interfaces/TargetProps';
 import { TodoProps } from './interfaces/ToDoProps';
 import Target from './components/TargetBox';
 import React from 'react';
+import Form from './components/Form';
 
 function App() {
  
@@ -19,6 +20,10 @@ function App() {
   const [todoId, setTodoId] = useState<number>(0);
     
   const [targetId, setTargetId] = useState<number>(0);
+
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [isComplete, setIsComplete] = useState(false);
     
     
   const requestBase = axios.create({
@@ -51,17 +56,17 @@ function App() {
     
   };
     
-  const postTarget = async () => {
-    
+  const postTarget = async (event: React.FormEvent) => {
+    event.preventDefault();
     try {
-    
+      setIsComplete(false)
       const response = await requestBase.post('Targets', {
       
-        title: 'Demo da aula',
+        title: title,
         
-        description: 'Mostando como fazer um post com axios',
+        description: description,
         
-        isComplete: false,
+        isComplete: isComplete,
         
         todo:[]
       
@@ -92,7 +97,8 @@ function App() {
   };
 
   
-  const putTarget = async() => {
+  const putTarget = async(event: React.FormEvent) => {
+    event.preventDefault;
     try {
       const response = await requestBase.put(`Targets/${targetId}`,{
     
@@ -135,8 +141,8 @@ function App() {
     }
   }
 
-  const postTodo = async () => {
-  
+  const postTodo = async (event: React.FormEvent) => {
+    event.preventDefault();
     try {
     
     const response = await requestBase.post('Todo', {
@@ -174,7 +180,8 @@ function App() {
     }
   }
   
-  const putTodo = async () => {
+  const putTodo = async (event: React.FormEvent) => {
+    event.preventDefault
     
     try {
     
@@ -222,6 +229,10 @@ function App() {
   useEffect(() => {
     getTarget();
   }, []);
+  const [isVisible, setIsVisible] = useState<boolean>(false)
+  const toggleVisibility = () => {
+    setIsVisible(!isVisible);
+  };
 
   return (
     <>
@@ -241,7 +252,17 @@ function App() {
           ))
         ) : (
           <h4>Lista de Targets Vazia...</h4>
-        )} 
+        )}
+        <Form
+        targetOrTodo='Target'
+        onSubmit={postTarget}
+        onChangeTitle={(e) => setTitle(e.target.value)}
+        onChangeDesc={(e) => {setDescription(e.target.value)}}
+        valorTitle={title}
+        valorDesc={description}
+        isVisible={isVisible}
+        onClick={toggleVisibility}
+        /> 
       </div>
            
     </>
