@@ -1,8 +1,8 @@
-import React from "react";
+import React, { FormEventHandler } from "react";
 import style from './form.module.css'
 interface FormProps{
     targetOrTodo : string,
-    onSubmit : (event: React.FormEvent) => void,
+    onSubmit : FormEventHandler<HTMLFormElement>,
     valorTitle : string,
     valorDesc : string,
     onChangeTitle : (e : any) => void,
