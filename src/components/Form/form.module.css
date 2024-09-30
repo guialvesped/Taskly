@@ -2,11 +2,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: absolute;
+    position: fixed;
     background-color: #242443;
     border: 1px solid #7A12FF;
     border-radius: 8px;
     padding: 20px;
+    top: 30%;
 }
 .formOn label {
     display: flex;

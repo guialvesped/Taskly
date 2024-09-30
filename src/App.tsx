@@ -18,15 +18,19 @@ function App() {
     
   const [targets, setTargets] = useState<TargetProps[]>([]);
     
-  const [todo, setTodo] = useState<TodoProps>();
+  const [todo, setTodo] = useState<TodoProps[]>([]);
     
   const [todoId, setTodoId] = useState<number>(0);
     
   const [targetId, setTargetId] = useState<number>(0);
-
+  //Target
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [isComplete, setIsComplete] = useState(false);
+  //ToDO
+  const [titleTd, setTitleTd] = useState('');
+  const [descriptionTd, setDescriptionTd] = useState('');
+  const [isCompleteTd, setIsCompleteTd] = useState(false);
     
     
   const requestBase = axios.create({
@@ -105,13 +109,13 @@ function App() {
     try {
       const response = await requestBase.put(`Targets/${targetId}`,{
     
-        title: 'Demo da aula',
+        title: title,
         
-        description: 'Mostando como fazer um post com axios',
+        description: description,
         
-        isComplete: false,
+        isComplete: isComplete,
         
-        todo:[]
+        todo: todo
         
       })
 
@@ -144,30 +148,25 @@ function App() {
     }
   }
 
-  const postTodo = async (event: React.FormEvent) => {
-    event.preventDefault();
+  const postTodo = async (event: React.FormEvent, targetId: number) => {
+    event.preventDefault(); // Impede o comportamento padrão de recarregar a página
+  
     try {
-    
-    const response = await requestBase.post('Todo', {
-    
-      title: 'Primeiro',
-      
-      description: 'Montar a estrutura do request - URL e Headers',
-      
-      isComplete: false,
-      
-      targetId: 22
-      
+      // Faz o POST para criar o novo ToDo
+      const response = await requestBase.post('Todos', { // Verifique se o endpoint é 'Todos'
+        title: titleTd,
+        description: descriptionTd,
+        isComplete: false,
+        targetId: targetId, // Associa o ToDo ao targetId correto
       });
-    
-      console.log(response.data);
-    
+  
+      console.log('ToDo criado com sucesso:', response.data);
+  
+      setDescriptionTd('')
+      setTitleTd('')
     } catch (error) {
-    
-      console.error('Erro na requisição:', error)
-    
-    };
-    
+      console.error('Erro ao criar o ToDo:', error);
+    }
   };
     
   const getToDoById = async () => {
@@ -231,10 +230,17 @@ function App() {
 
   useEffect(() => {
     getTarget();
+    const intervalId = setInterval(getTarget, 5000);
+    return () => clearInterval(intervalId);
   }, []);
-  const [isVisible, setIsVisible] = useState<boolean>(false)
-  const toggleVisibility = () => {
-    setIsVisible(!isVisible);
+
+  const [isVisibleTarget, setIsVisibleTarget] = useState<boolean>(false)
+  const [isVisibleTodo, setIsVisibleToDo] = useState<boolean>(false)
+  const toggleVisibilityFormTarget = () => {
+    setIsVisibleTarget(!isVisibleTarget);
+  };
+  const toggleVisibilityFormToDo = () => {
+    setIsVisibleToDo(!isVisibleTodo);
   };
 
   return (
@@ -242,7 +248,7 @@ function App() {
       <h1>Lista de Targets</h1>
       <div className='addButton'>
         <ButtonForm
-         onClick={toggleVisibility}
+         onClick={toggleVisibilityFormTarget}
          text='Create new target'
          imgUrl={mais_amarelo}
         />
@@ -257,7 +263,21 @@ function App() {
                 description={target.description}
                 isComplete={target.isComplete}
                 toDoList={target.toDoList}
+                onClick={toggleVisibilityFormToDo}
               />
+              <Form
+                targetOrTodo='ToDo'
+                onSubmit={(event) => {
+                  event.preventDefault();
+                  postTodo(event, target.id)
+                }}
+                onChangeTitle={(e) => {setTitle(e.target.value)}}
+                onChangeDesc={(e) => {setDescription(e.target.value)}}
+                valorTitle={title}
+                valorDesc={description}
+                isVisible={isVisibleTodo}
+                onClick={toggleVisibilityFormToDo}
+                />
             </React.Fragment>
           ))
         ) : (
@@ -266,12 +286,12 @@ function App() {
         <Form
         targetOrTodo='Target'
         onSubmit={postTarget}
-        onChangeTitle={(e) => setTitle(e.target.value)}
+        onChangeTitle={(e) => {setTitle(e.target.value)}}
         onChangeDesc={(e) => {setDescription(e.target.value)}}
         valorTitle={title}
         valorDesc={description}
-        isVisible={isVisible}
-        onClick={toggleVisibility}
+        isVisible={isVisibleTarget}
+        onClick={toggleVisibilityFormTarget}
         /> 
       </div>
            

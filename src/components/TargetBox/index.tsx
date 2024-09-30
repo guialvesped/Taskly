@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import { TargetProps } from "../../interfaces/TargetProps";
 import ToDo from "../ToDoBox";
 import setaDown from '../../assets/img/seta_down.svg'
+import mais_verde from '../../assets/img/plus_verde.svg'
 import style from './target.module.css'
+import ButtonForm from "../ButtonForm";
+import Form from "../Form";
 
 
 const Target : React.FC<TargetProps> = (props : TargetProps) => {
@@ -13,11 +16,10 @@ const Target : React.FC<TargetProps> = (props : TargetProps) => {
     };
     return (
         <div className={style.targetBox}>
-            <a>{props.title}</a>
+            <a>
+                {props.title}
+            </a>
             <p>{props.description}</p>
-            <button onClick={toggleVisibility}>
-                <img src={setaDown} alt="Exibir To Do" />
-            </button>
             <div className={isVisible ? style.toDoOn : style.toDoOff}>
                 {props.toDoList && props.toDoList.length  > 0 ? (
                     props.toDoList.map((toDo) => (
@@ -32,8 +34,15 @@ const Target : React.FC<TargetProps> = (props : TargetProps) => {
                     ))
                     ) : (<p>Ainda não há um "ToDo" para este Target</p>)
                 }
+                <ButtonForm
+                onClick={props.onClick}
+                imgUrl={mais_verde}
+                text="Create new To Do"
+                />
             </div>
-            
+            <button onClick={toggleVisibility}>
+                <img src={setaDown} alt="Exibir To Do" />
+            </button>
         </div>
     )
 }
