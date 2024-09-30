@@ -15,7 +15,7 @@ const Form : React.FC<FormProps> = (props : FormProps) => {
 
     return(
         <>
-        <form onSubmit={props.onSubmit} className={props.isVisible ? style.formOff : style.formOn}>
+        <form onSubmit={props.onSubmit} className={props.isVisible ? style.formOn : style.formOff}>
             <a>New {props.targetOrTodo}</a>
             <label>
                 Title

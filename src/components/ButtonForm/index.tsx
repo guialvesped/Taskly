@@ -10,9 +10,10 @@ const ButtonForm : React.FC<ButtonFormProps> = (props : ButtonFormProps) => {
     return(
         <>
         <button onClick={props.onClick}>
-            {props.imgUrl}
+            <img src={props.imgUrl} alt="" />
             {props.text}
         </button>
         </>
     )
 }
+export default ButtonForm;

@@ -6,6 +6,9 @@ import { TodoProps } from './interfaces/ToDoProps';
 import Target from './components/TargetBox';
 import React from 'react';
 import Form from './components/Form';
+import ButtonForm from './components/ButtonForm';
+import mais_amarelo from './assets/img/plus_amarelo.svg'
+import mais_verde from './assets/img/plus_verde.svg'
 
 function App() {
  
@@ -237,6 +240,13 @@ function App() {
   return (
     <>
       <h1>Lista de Targets</h1>
+      <div>
+        <ButtonForm
+         onClick={toggleVisibility}
+         text='Create new target'
+         imgUrl={mais_amarelo}
+        />
+      </div>
       <div className='main'>
         {targets.length > 0 ? (
           targets.map((target) => (
