@@ -240,7 +240,7 @@ function App() {
   return (
     <>
       <h1>Lista de Targets</h1>
-      <div>
+      <div className='addButton'>
         <ButtonForm
          onClick={toggleVisibility}
          text='Create new target'

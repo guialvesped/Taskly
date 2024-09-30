@@ -1,0 +1,11 @@
+.buttonAdd {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: #242443;
+    border: 1px solid #7A12FF;
+    color: #FFFFFF;
+    padding: 5px 10px 5px 10px;
+    border-radius: 5px;
+}

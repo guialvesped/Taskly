@@ -1,5 +1,5 @@
 import React from "react";
-
+import style from './button.module.css'
 interface ButtonFormProps {
     onClick : () => void,
     text : string,
@@ -9,7 +9,7 @@ interface ButtonFormProps {
 const ButtonForm : React.FC<ButtonFormProps> = (props : ButtonFormProps) => {
     return(
         <>
-        <button onClick={props.onClick}>
+        <button className={style.buttonAdd} onClick={props.onClick}>
             <img src={props.imgUrl} alt="" />
             {props.text}
         </button>
