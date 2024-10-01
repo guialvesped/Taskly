@@ -5,7 +5,7 @@ import setaDown from '../../assets/img/seta_down.svg'
 import mais_verde from '../../assets/img/plus_verde.svg'
 import style from './target.module.css'
 import ButtonForm from "../ButtonForm";
-import Form from "../Form";
+import lixo from '../../assets/img/lixo.svg'
 
 
 const Target : React.FC<TargetProps> = (props : TargetProps) => {
@@ -16,13 +16,19 @@ const Target : React.FC<TargetProps> = (props : TargetProps) => {
     };
     return (
         <div className={style.targetBox}>
-            <button onClick={props.deleteTarget}>
-                    <img src={lixo} alt="" />
-            </button>
-            <a>
-                
-                {props.title}
-            </a>
+            <div className={style.headTarget}>
+                <button onClick={props.deleteTarget}>
+                        <img src={lixo} alt="" />
+                </button>
+                <a>
+                    {props.title}
+                </a>
+                <ButtonForm
+                onClick={props.onClick}
+                imgUrl={mais_verde}
+                text=""
+                />
+            </div>
             <p>{props.description}</p>
             <div className={isVisible ? style.toDoOn : style.toDoOff}>
                 {props.toDoList && props.toDoList.length  > 0 ? (
