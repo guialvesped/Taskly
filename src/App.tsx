@@ -8,7 +8,6 @@ import React from 'react';
 import Form from './components/Form';
 import ButtonForm from './components/ButtonForm';
 import mais_amarelo from './assets/img/plus_amarelo.svg'
-import mais_verde from './assets/img/plus_verde.svg'
 
 function App() {
  
@@ -53,7 +52,6 @@ function App() {
       const response = await requestBase.get('Targets');//Busca na api por 'Targets', inserindo o que esta dentro do get() na URL
     
       setTargets(response.data); // Armazena os dados recebidos no estado
-      console.log(response.data)
     
     } catch (error) {
     
@@ -153,7 +151,7 @@ function App() {
   
     try {
       // Faz o POST para criar o novo ToDo
-      const response = await requestBase.post('Todos', { // Verifique se o endpoint é 'Todos'
+      const response = await requestBase.post('Todo', { // Verifique se o endpoint é 'Todos'
         title: titleTd,
         description: descriptionTd,
         isComplete: false,
@@ -172,7 +170,7 @@ function App() {
   const getToDoById = async () => {
     try {
       // Faz uma requisição GET para buscar o Target específico pelo ID
-      const response = await requestBase.get(`Targets/${targetId}`);
+      const response = await requestBase.get(`Todo/${targetId}`);
       // Armazena o Target recebido no estado
       setTargets(response.data);
       

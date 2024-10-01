@@ -11,6 +11,7 @@ export interface TargetProps {
     isComplete: boolean;
 
     toDoList : TodoProps[],
-    onClick : () => void
+    onClick : () => void,
+    deleteTarget : () => void
     
   } 
