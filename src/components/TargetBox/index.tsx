@@ -5,7 +5,7 @@ import setaDown from '../../assets/img/seta_down.svg'
 import mais_verde from '../../assets/img/plus_verde.svg'
 import style from './target.module.css'
 import ButtonForm from "../ButtonForm";
-import Form from "../Form";
+import lixo from '../../assets/img/lixo.svg'
 
 
 const Target : React.FC<TargetProps> = (props : TargetProps) => {
