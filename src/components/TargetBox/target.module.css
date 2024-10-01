@@ -9,10 +9,16 @@
 
 .targetBox button {
     background-color: #242443;
-    border-radius: 6px;
-    border: 1px solid #7A12FF;
+    border: none;
     display: flex;
     align-items: center;
+}
+
+.targetBox a {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
 }
 
 .toDoOff{

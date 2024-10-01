@@ -122,11 +122,11 @@ function App() {
     }
   }
 
-  const DeleteTarget = async () => {
+  const DeleteTarget = async (targetId : number) => {
     
     try {
     
-      const response = await requestBase.delete(`Targets/${todoId}`);
+      const response = await requestBase.delete(`Targets/${targetId}`);
     
       setTodo(response.data); // Armazena os dados recebidos no estado
     
@@ -148,7 +148,6 @@ function App() {
 
   const postTodo = async (event: React.FormEvent, targetId: number) => {
     event.preventDefault(); // Impede o comportamento padrão de recarregar a página
-  
     try {
       // Faz o POST para criar o novo ToDo
       const response = await requestBase.post('Todo', { // Verifique se o endpoint é 'Todos'
@@ -262,11 +261,11 @@ function App() {
                 isComplete={target.isComplete}
                 toDoList={target.toDoList}
                 onClick={toggleVisibilityFormToDo}
+                deleteTarget={(e) => {DeleteTarget(target.id)}}
               />
               <Form
                 targetOrTodo='ToDo'
                 onSubmit={(event) => {
-                  event.preventDefault();
                   postTodo(event, target.id)
                 }}
                 onChangeTitle={(e) => {setTitle(e.target.value)}}
@@ -283,7 +282,7 @@ function App() {
         )}
         <Form
         targetOrTodo='Target'
-        onSubmit={postTarget}
+        onSubmit={(e) => postTarget(e)}
         onChangeTitle={(e) => {setTitle(e.target.value)}}
         onChangeDesc={(e) => {setDescription(e.target.value)}}
         valorTitle={title}
