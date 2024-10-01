@@ -12,6 +12,6 @@ export interface TargetProps {
 
     toDoList : TodoProps[],
     onClick : () => void,
-    deleteTarget : () => void
+    deleteTarget : (e: any) => void
     
   } 
