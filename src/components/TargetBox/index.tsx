@@ -16,7 +16,11 @@ const Target : React.FC<TargetProps> = (props : TargetProps) => {
     };
     return (
         <div className={style.targetBox}>
+            <button onClick={props.deleteTarget}>
+                    <img src={lixo} alt="" />
+            </button>
             <a>
+                
                 {props.title}
             </a>
             <p>{props.description}</p>

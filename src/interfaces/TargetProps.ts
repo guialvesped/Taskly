@@ -11,6 +11,11 @@ export interface TargetProps {
     isComplete: boolean;
 
     toDoList : TodoProps[],
+<<<<<<< Updated upstream
     onClick : () => void
+=======
+    onClick : () => void,
+    deleteTarget : (e: any) => void
+>>>>>>> Stashed changes
     
   } 
