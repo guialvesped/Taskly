@@ -227,6 +227,7 @@ function App() {
 
   useEffect(() => {
     getTarget();
+    getToDo();
     const intervalId = setInterval(getTarget, 5000);
     return () => clearInterval(intervalId);
   }, []);
@@ -239,7 +240,6 @@ function App() {
   const toggleVisibilityFormToDo = () => {
     setIsVisibleToDo(!isVisibleTodo);
   };
-
   return (
     <>
       <h1>Lista de Targets</h1>
@@ -259,9 +259,9 @@ function App() {
                 id={target.id}
                 description={target.description}
                 isComplete={target.isComplete}
-                toDoList={target.toDoList}
+                toDoList={target.todo}
                 onClick={toggleVisibilityFormToDo}
-                deleteTarget={(e) => {DeleteTarget(target.id)}}
+                deleteTarget={() => {DeleteTarget(target.id)}}
               />
               <Form
                 targetOrTodo='ToDo'

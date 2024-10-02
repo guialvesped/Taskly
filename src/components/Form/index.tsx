@@ -36,7 +36,7 @@ const Form : React.FC<FormProps> = (props : FormProps) => {
                  />
             </label>
             <button type="submit">Enviar</button>
-            <button onClick={props.onClick}>Cancelar</button>
+            <button type='reset' onClick={props.onClick}>Cancelar</button>
         </form>
         </>
     )

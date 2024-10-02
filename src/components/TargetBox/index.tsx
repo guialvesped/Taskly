@@ -6,27 +6,30 @@ import mais_verde from '../../assets/img/plus_verde.svg'
 import style from './target.module.css'
 import ButtonForm from "../ButtonForm";
 import lixo from '../../assets/img/lixo.svg'
+import alterTool from '../../assets/img/alter_tool.svg'
+import { TargetCardProps } from "../../interfaces/TargetCardProps";
 
-
-const Target : React.FC<TargetProps> = (props : TargetProps) => {
+const Target : React.FC<TargetCardProps> = (props : TargetCardProps) => {
     const [isVisible, setIsVisible] = useState(false);
 
     const toggleVisibility = () => {
       setIsVisible(!isVisible);
+      console.log(props.toDoList
+      )
     };
     return (
         <div className={style.targetBox}>
             <div className={style.headTarget}>
-                <button onClick={props.deleteTarget}>
-                        <img src={lixo} alt="" />
-                </button>
+                <ButtonForm
+                 onClick={props.deleteTarget}
+                 imgUrl={lixo}
+                />
                 <a>
                     {props.title}
                 </a>
                 <ButtonForm
                 onClick={props.onClick}
-                imgUrl={mais_verde}
-                text=""
+                imgUrl={alterTool}
                 />
             </div>
             <p>{props.description}</p>
@@ -50,9 +53,10 @@ const Target : React.FC<TargetProps> = (props : TargetProps) => {
                 text="Create new To Do"
                 />
             </div>
-            <button onClick={toggleVisibility}>
-                <img src={setaDown} alt="Exibir To Do" />
-            </button>
+            <ButtonForm
+             onClick={toggleVisibility}
+             imgUrl={setaDown}
+            />
         </div>
     )
 }

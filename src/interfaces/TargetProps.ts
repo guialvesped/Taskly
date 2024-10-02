@@ -10,8 +10,6 @@ export interface TargetProps {
     
     isComplete: boolean;
 
-    toDoList : TodoProps[],
-    onClick : () => void,
-    deleteTarget : (e: any) => void
+    todo : any[]
     
   } 

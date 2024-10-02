@@ -1,8 +1,8 @@
 import React from "react";
 import style from './button.module.css'
 interface ButtonFormProps {
-    onClick : () => void,
-    text : string,
+    onClick :  (e : any) => void,
+    text ?: string,
     imgUrl ?: string
 }
 
