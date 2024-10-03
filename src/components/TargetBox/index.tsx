@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-import { TargetProps } from "../../interfaces/TargetProps";
 import ToDo from "../ToDoBox";
 import setaDown from '../../assets/img/seta_down.svg'
 import mais_verde from '../../assets/img/plus_verde.svg'
 import style from './target.module.css'
 import ButtonForm from "../ButtonForm";
 import lixo from '../../assets/img/lixo.svg'
+import alterTool from '../../assets/img/alter_tool.svg'
+import { TargetCardProps, TargetProps } from "../../interfaces/TargetProps";
 
 
-const Target : React.FC<TargetProps> = (props : TargetProps) => {
+const Target : React.FC<TargetCardProps> = (props : TargetCardProps) => {
     const [isVisible, setIsVisible] = useState(false);
 
     const toggleVisibility = () => {
@@ -16,13 +17,19 @@ const Target : React.FC<TargetProps> = (props : TargetProps) => {
     };
     return (
         <div className={style.targetBox}>
-            <button onClick={props.deleteTarget}>
-                    <img src={lixo} alt="" />
-            </button>
-            <a>
-                
-                {props.title}
-            </a>
+            <div className={style.headTarget}>
+                <ButtonForm
+                 onClick={props.deleteTarget}
+                 imgUrl={lixo}
+                />
+                <a>
+                    {props.title}
+                </a>
+                <ButtonForm
+                onClick={props.onClickAlterTarget}
+                imgUrl={alterTool}
+                />
+            </div>
             <p>{props.description}</p>
             <div className={isVisible ? style.toDoOn : style.toDoOff}>
                 {props.toDoList && props.toDoList.length  > 0 ? (

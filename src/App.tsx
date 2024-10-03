@@ -17,7 +17,7 @@ function App() {
     
   const [targets, setTargets] = useState<TargetProps[]>([]);
     
-  const [todo, setTodo] = useState<TodoProps[]>([]);
+  const [todos, setTodo] = useState<TodoProps[]>([]);
     
   const [todoId, setTodoId] = useState<number>(0);
     
@@ -39,20 +39,21 @@ function App() {
     headers: {
     
     'Content-Type': 'application/json',
+    'Access-Control-Allow-Headers' : 'privatekey'
     
     },
     
   });
     
     
-  const getTarget = async () => { //Pega Target
+  const getTarget = async () => {
     
     try {
     
-      const response = await requestBase.get('Targets');//Busca na api por 'Targets', inserindo o que esta dentro do get() na URL
+      const response = await requestBase.get('Targets');
     
-      setTargets(response.data); // Armazena os dados recebidos no estado
-    
+      setTargets(response.data);
+      //console.log(response.data)
     } catch (error) {
     
       console.error('Erro na requisição:', error);
@@ -89,34 +90,34 @@ function App() {
 
   const getTargetById = async () => {
     try {
-      // Faz uma requisição GET para buscar o Target específico pelo ID
-      const response = await requestBase.get(`Targets/${targetId}`);
+      const response = await requestBase.get(`Targets/` + targetId);
       
-      // Armazena o Target recebido no estado
       setTargets(response.data);
       
-      console.log(targets); // Mostra o Target no console para verificação
+      console.log(targets);
     } catch (error) {
       console.error('Erro ao buscar Target com ID específico:', error);
     }
   };
 
   
-  const putTarget = async(event: React.FormEvent) => {
-    event.preventDefault;
+  const putTarget = async(event: React.FormEvent, targetId : number,target : TargetProps) => {
+    event.preventDefault();
     try {
       const response = await requestBase.put(`Targets/${targetId}`,{
+        
+        id : targetId,
     
         title: title,
         
         description: description,
         
-        isComplete: isComplete,
+        isComplete: target.isComplete,
         
-        todo: todo
+        todo: target.todo
         
       })
-
+      console.log(response.data, "Alteração feita com sucesso")
     }catch(error){
       console.error('Erro na requisição:', error)
     }
@@ -128,7 +129,7 @@ function App() {
     
       const response = await requestBase.delete(`Targets/${targetId}`);
     
-      setTodo(response.data); // Armazena os dados recebidos no estado
+      setTodo(response.data);
     
     } catch (error) {
       console.error('Erro na requisição:', error);
@@ -140,47 +141,42 @@ function App() {
     try {
       const response = await requestBase.get('Todo')
       setTodo(response.data)
-      console.log(todo)
+      console.log(todos)
     } catch (error) {
       console.error('Erro na requisição:', error);
     }
   }
 
   const postTodo = async (event: React.FormEvent, targetId: number) => {
-    event.preventDefault(); // Impede o comportamento padrão de recarregar a página
+    event.preventDefault();
+    console.log(targetId)
     try {
-      // Faz o POST para criar o novo ToDo
-      const response = await requestBase.post('Todo', { // Verifique se o endpoint é 'Todos'
+      const response = await requestBase.post('Todo', {
         title: titleTd,
         description: descriptionTd,
         isComplete: false,
-        targetId: targetId, // Associa o ToDo ao targetId correto
+        targetId: targetId
       });
-  
+      setTitleTd('');  // Limpa o campo de título
+      setDescriptionTd('');
       console.log('ToDo criado com sucesso:', response.data);
-  
-      setDescriptionTd('')
-      setTitleTd('')
     } catch (error) {
       console.error('Erro ao criar o ToDo:', error);
     }
   };
     
-  const getToDoById = async () => {
+  const getToDoById = async (todoId : number) => {
     try {
-      // Faz uma requisição GET para buscar o Target específico pelo ID
-      const response = await requestBase.get(`Todo/${targetId}`);
-      // Armazena o Target recebido no estado
-      setTargets(response.data);
       
-      console.log(targets); // Mostra o Target no console para verificação
+      const response = await requestBase.get(`Todo/${todoId}`);
+    
     } catch (error) {
       console.error('Erro ao buscar Target com ID específico:', error);
     }
   }
   
   const putTodo = async (event: React.FormEvent) => {
-    event.preventDefault
+    event.preventDefault();
     
     try {
     
@@ -227,19 +223,24 @@ function App() {
 
   useEffect(() => {
     getTarget();
-    const intervalId = setInterval(getTarget, 5000);
+    getToDo();
+    const intervalId = setInterval(getTarget, 2000);
     return () => clearInterval(intervalId);
   }, []);
 
   const [isVisibleTarget, setIsVisibleTarget] = useState<boolean>(false)
+  const [isVisibleAlterTarget, setIsVisibleAlterTarget] = useState<boolean>(false)
   const [isVisibleTodo, setIsVisibleToDo] = useState<boolean>(false)
   const toggleVisibilityFormTarget = () => {
     setIsVisibleTarget(!isVisibleTarget);
   };
+  const toggleVisibilityFormAlterTarget = () => {
+    setIsVisibleAlterTarget(!isVisibleAlterTarget)
+  }
   const toggleVisibilityFormToDo = () => {
     setIsVisibleToDo(!isVisibleTodo);
   };
-
+  const [editingTargetId, setEditingTargetId] = useState<number | null>(null);
   return (
     <>
       <h1>Lista de Targets</h1>
@@ -259,14 +260,18 @@ function App() {
                 id={target.id}
                 description={target.description}
                 isComplete={target.isComplete}
-                toDoList={target.toDoList}
+                toDoList={target.todo}
                 onClick={toggleVisibilityFormToDo}
-                deleteTarget={(e) => {DeleteTarget(target.id)}}
+                onClickAlterTarget={() => {
+                  setEditingTargetId(target.id);
+                  toggleVisibilityFormAlterTarget();
+                }}
+                deleteTarget={() => {DeleteTarget(target.id)}}
               />
               <Form
-                targetOrTodo='ToDo'
+                cardTitle='New ToDo'
                 onSubmit={(event) => {
-                  postTodo(event, target.id)
+                  postTodo(event, editingTargetId!)
                 }}
                 onChangeTitle={(e) => {setTitle(e.target.value)}}
                 onChangeDesc={(e) => {setDescription(e.target.value)}}
@@ -275,13 +280,24 @@ function App() {
                 isVisible={isVisibleTodo}
                 onClick={toggleVisibilityFormToDo}
                 />
+                <Form
+                cardTitle='Alter Target'
+                onSubmit={(e) => putTarget(e, editingTargetId!, target)}
+                onChangeTitle={(e) => {setTitle(e.target.value)}}
+                onChangeDesc={(e) => {setDescription(e.target.value)}}
+                valorTitle={title}
+                valorDesc={description}
+                isVisible={isVisibleAlterTarget}
+                onClick={toggleVisibilityFormAlterTarget}
+                />
+
             </React.Fragment>
           ))
         ) : (
           <h4>Lista de Targets Vazia...</h4>
         )}
         <Form
-        targetOrTodo='Target'
+        cardTitle='Target'
         onSubmit={(e) => postTarget(e)}
         onChangeTitle={(e) => {setTitle(e.target.value)}}
         onChangeDesc={(e) => {setDescription(e.target.value)}}

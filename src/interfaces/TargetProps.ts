@@ -1,4 +1,3 @@
-import { TodoProps } from "./ToDoProps";
 
 export interface TargetProps {
     
@@ -10,8 +9,19 @@ export interface TargetProps {
     
     isComplete: boolean;
 
-    toDoList : TodoProps[],
-    onClick : () => void,
-    deleteTarget : () => void
+    todo : any[]
+} 
+export interface TargetCardProps {
+  id: number,
     
-  } 
+  title: string,
+    
+  description: string,
+    
+  isComplete: boolean,
+
+  toDoList : any[],
+  onClick : () => void,
+  onClickAlterTarget : () => void,
+  deleteTarget : () => void
+}

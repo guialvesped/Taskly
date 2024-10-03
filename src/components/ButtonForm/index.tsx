@@ -2,7 +2,7 @@ import React from "react";
 import style from './button.module.css'
 interface ButtonFormProps {
     onClick : () => void,
-    text : string,
+    text ?: string,
     imgUrl ?: string
 }
 
