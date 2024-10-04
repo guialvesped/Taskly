@@ -1,3 +1,4 @@
+
 export interface TodoProps {
 
     id: number;
@@ -10,4 +11,19 @@ export interface TodoProps {
     
     targetId: number;
     
-  }
+}
+export interface TodoCardProps{
+  id: number;
+    
+  title: string;
+    
+  description: string;
+    
+  isComplete: boolean;
+    
+  targetId: number;
+
+  onClickAlterTodo ?:  () => void;
+
+  deleteTodo ?: () => void;       
+}

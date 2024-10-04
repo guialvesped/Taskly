@@ -1,15 +1,16 @@
 import React from "react";
 import style from './button.module.css'
 interface ButtonFormProps {
-    onClick :  (e : any) => void,
+    onClick ?:  () => void 
     text ?: string,
-    imgUrl ?: string
+    imgUrl ?: string, 
+    isTrash : boolean
 }
 
 const ButtonForm : React.FC<ButtonFormProps> = (props : ButtonFormProps) => {
     return(
         <>
-        <button className={style.buttonAdd} onClick={props.onClick}>
+        <button className={props.isTrash ? style.buttonTrash : style.buttonAdd} onClick={props.onClick}>
             <img src={props.imgUrl} alt="" />
             {props.text}
         </button>

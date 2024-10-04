@@ -3,6 +3,7 @@
   padding: 0;
   text-align: center;
   box-sizing: border-box;
+  font-family: "Nunito", sans-serif;
 }
 .main{
   display: flex;
@@ -18,4 +19,10 @@
   align-items: center;
   justify-content: center;
   padding: 15px;
+}
+.head {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
