@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ToDo from "../ToDoBox";
 import setaDown from '../../assets/img/seta_down.svg'
+import setaUp from '../../assets/img/setaUp.svg'
 import mais_verde from '../../assets/img/plus_verde.svg'
 import style from './target.module.css'
 import ButtonForm from "../ButtonForm";
@@ -118,9 +119,11 @@ const Target: React.FC<TargetCardProps> = (props: TargetCardProps) => {
                     isTrash = {false}
                 />
             </div>
-            <button onClick={toggleVisibility}>
-                <img src={setaDown} alt="Exibir To Do" />
-            </button>
+            <ButtonForm
+            isTrash={true}
+            imgUrl={isVisible ? setaUp : setaDown}
+            onClick={toggleVisibility}
+            />
         </div>
     );
 };
