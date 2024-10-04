@@ -1,5 +1,7 @@
 import React, { FormEventHandler } from "react";
 import style from './form.module.css'
+import lixo from '../../assets/img/lixo.svg'
+import sendPlane from '../../assets/img/sendPlane.svg'
 interface FormProps{
     cardTitle : string,
     onSubmit : FormEventHandler<HTMLFormElement>,
@@ -35,8 +37,14 @@ const Form : React.FC<FormProps> = (props : FormProps) => {
                 placeholder={`Give a description to your ${props.cardTitle}`}
                  />
             </label>
-            <button type="submit">Enviar</button>
-            <button type='reset' onClick={props.onClick}>Cancelar</button>
+            <button type="submit">
+                <img src={sendPlane} alt="" />
+                Enviar
+            </button>
+            <button type='reset' onClick={props.onClick}>
+                <img src={lixo} alt="" />
+                Cancelar
+            </button>
         </form>
         </>
     )
