@@ -3,9 +3,40 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    border: none;
     background-color: #242443;
-    border: 1px solid #7A12FF;
     color: #FFFFFF;
     padding: 5px 10px 5px 10px;
     border-radius: 5px;
+    transition: box-shadow 1s ease-in-out;
+}
+.buttonAdd img {
+    transition: transform 1s ease-in-out;
+}
+.buttonAdd:hover {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px, #7A12FF 0px 0px 0px 3px;
+}
+.buttonAdd:hover img {
+    transform: rotate(90deg);
+}
+.buttonTrash {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background-color: #242443;
+    color: #FFFFFF;
+    padding: 5px 10px 5px 10px;
+    border-radius: 5px;
+    transition: box-shadow 1s ease-in-out;
+}
+.buttonTrash:hover {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px, #7A12FF 0px 0px 0px 3px;
+}
+.buttonTrash img {
+    transition: transform 1s ease-in-out;
+}
+.buttonTrash:hover img {
+    transform: rotate(360deg);
 }

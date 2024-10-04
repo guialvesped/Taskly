@@ -1,3 +1,4 @@
+import { AxiosInstance } from "axios";
 
 export interface TargetProps {
     
@@ -9,19 +10,24 @@ export interface TargetProps {
     
     isComplete: boolean;
 
-    todo : any[]
+    todo : any[];
 } 
 export interface TargetCardProps {
-  id: number,
+  id: number;
     
-  title: string,
+  title: string;
     
-  description: string,
+  description: string;
     
-  isComplete: boolean,
+  isComplete: boolean;
 
-  toDoList : any[],
-  onClick : () => void,
-  onClickAlterTarget : () => void,
-  deleteTarget : () => void
+  toDoList : any[];
+
+  requestBase : AxiosInstance;
+
+  onClick : () => void;
+
+  onClickAlterTarget : () => void;
+
+  deleteTarget : () => void;
 }

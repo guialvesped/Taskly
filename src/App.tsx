@@ -8,6 +8,7 @@ import React from 'react';
 import Form from './components/Form';
 import ButtonForm from './components/ButtonForm';
 import mais_amarelo from './assets/img/plus_amarelo.svg'
+import check_verde from './assets/img/check.svg'
 
 function App() {
  
@@ -124,7 +125,7 @@ function App() {
   }
 
   const DeleteTarget = async (targetId : number) => {
-    
+    console.log('ID do Target:', targetId);
     try {
     
       const response = await requestBase.delete(`Targets/${targetId}`);
@@ -169,57 +170,13 @@ function App() {
     try {
       
       const response = await requestBase.get(`Todo/${todoId}`);
-    
+      console.log(response.data)
     } catch (error) {
       console.error('Erro ao buscar Target com ID específico:', error);
     }
   }
   
-  const putTodo = async (event: React.FormEvent) => {
-    event.preventDefault();
-    
-    try {
-    
-    const response = await requestBase.put(`Todo/${todoId}`, {
-    
-    id: todoId,
-    
-    title: 'Segundo',
-    
-    description: 'Montar a estrutura do request - URL e Headers',
-    
-    isComplete: false,
-    
-    targetId: 22
-    
-    });
-    
-    console.log(response.data);
-    
-    } catch (error) {
-    
-    console.error('Erro na requisição:', error)
-    
-    };
-    
-  };
-    
-    
-  const DeleteToDo = async () => {
-    
-    try {
-    
-    const response = await requestBase.delete(`Todo/${todoId}`);
-    
-    setTodo(response.data); // Armazena os dados recebidos no estado
-    
-    } catch (error) {
-    
-    console.error('Erro na requisição:', error);
-    
-    }
-    
-  };
+  
 
   useEffect(() => {
     getTarget();
@@ -243,12 +200,16 @@ function App() {
   const [editingTargetId, setEditingTargetId] = useState<number | null>(null);
   return (
     <>
-      <h1>Lista de Targets</h1>
+      <div className="head">
+        <img src={check_verde} alt="" />
+        <h1>Lista de Targets</h1>
+      </div>
       <div className='addButton'>
         <ButtonForm
          onClick={toggleVisibilityFormTarget}
          text='Create new target'
          imgUrl={mais_amarelo}
+         isTrash = {false}
         />
       </div>
       <div className='main'>
@@ -261,26 +222,30 @@ function App() {
                 description={target.description}
                 isComplete={target.isComplete}
                 toDoList={target.todo}
-                onClick={toggleVisibilityFormToDo}
+                onClick={() => {
+                  setEditingTargetId(target.id);
+                  toggleVisibilityFormToDo();
+                }}
                 onClickAlterTarget={() => {
                   setEditingTargetId(target.id);
                   toggleVisibilityFormAlterTarget();
                 }}
                 deleteTarget={() => {DeleteTarget(target.id)}}
+                requestBase={requestBase}
               />
               <Form
                 cardTitle='New ToDo'
                 onSubmit={(event) => {
                   postTodo(event, editingTargetId!)
                 }}
-                onChangeTitle={(e) => {setTitle(e.target.value)}}
-                onChangeDesc={(e) => {setDescription(e.target.value)}}
-                valorTitle={title}
-                valorDesc={description}
+                onChangeTitle={(e) => {setTitleTd(e.target.value)}}
+                onChangeDesc={(e) => {setDescriptionTd(e.target.value)}}
+                valorTitle={titleTd}
+                valorDesc={descriptionTd}
                 isVisible={isVisibleTodo}
                 onClick={toggleVisibilityFormToDo}
-                />
-                <Form
+              />
+              <Form
                 cardTitle='Alter Target'
                 onSubmit={(e) => putTarget(e, editingTargetId!, target)}
                 onChangeTitle={(e) => {setTitle(e.target.value)}}
@@ -289,7 +254,7 @@ function App() {
                 valorDesc={description}
                 isVisible={isVisibleAlterTarget}
                 onClick={toggleVisibilityFormAlterTarget}
-                />
+              />
 
             </React.Fragment>
           ))
