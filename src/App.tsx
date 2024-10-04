@@ -20,9 +20,6 @@ function App() {
     
   const [todos, setTodo] = useState<TodoProps[]>([]);
     
-  const [todoId, setTodoId] = useState<number>(0);
-    
-  const [targetId, setTargetId] = useState<number>(0);
   //Target
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -30,7 +27,6 @@ function App() {
   //ToDO
   const [titleTd, setTitleTd] = useState('');
   const [descriptionTd, setDescriptionTd] = useState('');
-  const [isCompleteTd, setIsCompleteTd] = useState(false);
     
     
   const requestBase = axios.create({
@@ -89,7 +85,7 @@ function App() {
     
   };
 
-  const getTargetById = async () => {
+  const getTargetById = async (targetId : number) => {
     try {
       const response = await requestBase.get(`Targets/` + targetId);
       
@@ -105,6 +101,7 @@ function App() {
   const putTarget = async(event: React.FormEvent, targetId : number,target : TargetProps) => {
     event.preventDefault();
     try {
+      getTargetById(targetId)
       const response = await requestBase.put(`Targets/${targetId}`,{
         
         id : targetId,
@@ -165,16 +162,6 @@ function App() {
       console.error('Erro ao criar o ToDo:', error);
     }
   };
-    
-  const getToDoById = async (todoId : number) => {
-    try {
-      
-      const response = await requestBase.get(`Todo/${todoId}`);
-      console.log(response.data)
-    } catch (error) {
-      console.error('Erro ao buscar Target com ID específico:', error);
-    }
-  }
   
   
 

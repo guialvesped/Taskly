@@ -19,8 +19,18 @@ const Target: React.FC<TargetCardProps> = (props: TargetCardProps) => {
     const [isCompleteTd, setIsCompleteTd] = useState(false);
     const [editingTodoId, setEditingTodoId] = useState<number | null>(null);
 
+    const getToDoById = async (rb: AxiosInstance, todoId : number) => {
+        try {
+          const response = await rb.get(`Todo/${todoId}`);
+          console.log(response.data)
+        } catch (error) {
+          console.error('Erro ao buscar Target com ID específico:', error);
+        }
+      }
+
     const putTodo = async (event: React.FormEvent, rb: AxiosInstance, todo: TodoProps) => {
-        event.preventDefault(); // Adicionado os parênteses
+        event.preventDefault();
+        getToDoById(rb, editingTodoId!)
         if (editingTodoId === null) {
             console.error('ID do ToDo não definido!');
             return;
